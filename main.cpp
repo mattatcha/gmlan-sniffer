@@ -14,14 +14,22 @@ void clearAndHome()
 
 void processMessage()
 {
+    // Get system time and turn on rx_led to indicate we are receiving data
     time_t seconds = time(NULL);
     rx_led = 1;
+    
+    // Create a CANMessage object and read the buffer into it
     CANMessage rxmsg;
     gmlan.read(rxmsg);
+    
+    // Output to the USB serial device formatted data, walking through and formatting each packet
+    // http://www.cplusplus.com/reference/cstdio/printf/ is a useful resource to describe printf
     pc.printf("[%10d]\t[%d]\t[0x%08X]\t", seconds, rxmsg.len, rxmsg.id);
     for (unsigned int i = 0; i < rxmsg.len; i++)
         pc.printf("%02X ", rxmsg.data[i]);
     pc.printf("\r\n");
+    
+    // Turn off our rx_led as we have finished reading data
     rx_led = 0;
 }
 
