@@ -1,7 +1,6 @@
 #include "mbed.h"
 
 DigitalOut rx_led(LED1);
-DigitalOut tx_led(LED4);
 Serial pc(USBTX, USBRX);
 CAN gmlan(p30, p29);
 
@@ -39,7 +38,6 @@ int main() {
     // Clear serial terminal and start capturing packets
     clearAndHome();
     pc.printf("Starting packet capture at %i bps\r\n", baudrate);
-    
     gmlan.attach(&processMessage);
     
     while(1) {
