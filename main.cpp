@@ -27,31 +27,23 @@ void processMessage()
 }
 
 int main() {
+    // Reset uptime timer and set serial baud rate to 115kbit
     set_time(0);
     pc.baud(115200);
+    
+    // Set CANBUS to 33.3kbit and put into monitor mode (does not ACK packets, aka stealth mode)
     int baudrate = 33333;
-//    CANMessage rxmsg;
-    
-    // Put device in monitor mode - sniff only
-    gmlan.monitor(true);
     gmlan.frequency(baudrate);
+    gmlan.monitor(true);
     
+    // Clear serial terminal and start capturing packets
     clearAndHome();
     pc.printf("Starting packet capture at %i bps\r\n", baudrate);
     
     gmlan.attach(&processMessage);
     
     while(1) {
+        // Sleep for 20ms repeatedly, all messages are handled by an interrupt, this prevents keeping the mbed at full load
         wait(0.02);
     }
-//        if (gmlan.read(rxmsg)) {
-//            rx_led = 0;
-//            pc.printf("Message: ");
-//            for (unsigned int i = 0; i < rxmsg.len; i++)
-//                pc.printf("[%d] 0x%X %02X ", time(NULL), rxmsg.id, rxmsg.data[i]);
-//            pc.printf("\r\n");
-//            rx_led = 0;
-//        }
-//        rx_led = 1;
-//    }
 }
