@@ -110,7 +110,7 @@ int main() {
     // Set CANBUS to 33.3kbit and put into monitor mode (does not ACK packets, aka stealth mode)
     int baudrate = 33333;
     gmlan.frequency(baudrate);
-    gmlan.monitor(false);
+    gmlan.monitor(true);
     
     // Clear serial terminal
     clearAndHome();
