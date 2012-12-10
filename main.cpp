@@ -9,6 +9,7 @@ CAN gmlan(p30, p29);
 Timer uptime;
 bool filterPackets = false;
 vector<int> filteredPackets;
+extern "C" void mbed_reset();
 
 namespace mbed {
     class CANHeader {
@@ -151,6 +152,14 @@ int main() {
                     for (int i=0; i < filteredPackets.size(); i++)
                         pc.printf("%u: 0x%08X ", i+1, filteredPackets[i]);
                     pc.printf("\r\n");
+                    break;
+                }
+                case 'r':
+                case 'R':
+                {
+                    // Restart mbed
+                    pc.printf("Restarting mbed...\r\n");
+                    mbed_reset();
                     break;
                 }
                 default:
