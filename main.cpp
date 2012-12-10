@@ -114,7 +114,7 @@ int main() {
     
     // Clear serial terminal
     clearAndHome();
-    pc.printf("Keys: F = start/stop filter capture, D = display filtered headers, C = clear filter\r\n");
+    pc.printf("Keys:\r\nF = start/stop filter capture\r\nD = display filtered headers\r\nC = clear filter\r\nR = restart mbed\r\n");
     pc.printf("Starting packet capture at %i bps\r\n\r\n", baudrate);
     
     // Start capturing packets
